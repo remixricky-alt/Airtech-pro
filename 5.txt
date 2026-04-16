@@ -1,0 +1,64 @@
+<script>
+function diagnose() {
+  let ref = document.getElementById("refrigerant").value;
+  let symptom = document.getElementById("symptom").value;
+
+  let suction = Number(document.getElementById("suction").value);
+  let head = Number(document.getElementById("head").value);
+  let sh = Number(document.getElementById("sh").value);
+  let sc = Number(document.getElementById("sc").value);
+
+  let result = "";
+
+  // Refrigerant context
+  if (ref === "r32") {
+    result += "R32 System: A2L refrigerant, higher pressure, efficient.\n";
+  } else {
+    result += "R454B System: R410A replacement, similar operating range.\n";
+  }
+
+  // Symptom logic
+  if (symptom === "notcooling") {
+    result += "\nCheck airflow first (filter, blower, duct restrictions).";
+    result += "\nIf airflow OK → check charge and superheat.";
+  }
+
+  if (symptom === "freeze") {
+    result += "\nLikely causes: low airflow or low charge.";
+    result += "\nExpected: high superheat if undercharged.";
+  }
+
+  if (symptom === "highhead") {
+    result += "\nPossible causes: dirty condenser, overcharge, or airflow restriction.";
+    result += "\nCheck condenser coil and outdoor fan operation.";
+  }
+
+  if (symptom === "lowcharge") {
+    result += "\nCheck for leaks first.";
+    result += "\nTypical: low suction + high superheat.";
+  }
+
+  if (symptom === "shortcycle") {
+    result += "\nCheck thermostat, low voltage, or safety lockouts.";
+  }
+
+  // Quick field interpretation
+  if (sh && sh > 20) {
+    result += "\n\nSuperheat is HIGH → likely undercharged or low airflow.";
+  }
+
+  if (sh && sh < 5) {
+    result += "\n\nSuperheat is LOW → possible overfeeding or overcharge.";
+  }
+
+  if (sc && sc > 15) {
+    result += "\n\nSubcool is HIGH → possible overcharge or restriction.";
+  }
+
+  if (sc && sc < 5) {
+    result += "\n\nSubcool is LOW → likely undercharged or flashing.";
+  }
+
+  document.getElementById("diagOut").innerText = result;
+}
+</script>

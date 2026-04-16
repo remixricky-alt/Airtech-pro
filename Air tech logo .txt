@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AirTech Pro Logo</title>
+
+<style>
+body {
+  margin: 0;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #0b0f14;
+  font-family: Arial;
+}
+
+.logo {
+  width: 220px;
+  height: 220px;
+  background: radial-gradient(circle at top, #58a6ff, #1f6feb);
+  border-radius: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 0 25px rgba(88,166,255,0.5);
+  color: white;
+  text-align: center;
+}
+
+.symbol {
+  font-size: 50px;
+  margin-bottom: 10px;
+}
+
+.title {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.subtitle {
+  font-size: 12px;
+  opacity: 0.8;
+  margin-top: 5px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="logo">
+  <div class="symbol">❄️💨</div>
+  <div class="title">AirTech Pro</div>
+  <div class="subtitle">HVAC Field Tools</div>
+</div>
+
+</body>
+</html>

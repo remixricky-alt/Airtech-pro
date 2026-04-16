@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AirTech Pro</title>
+
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#58a6ff">
+
+<style>
+body {
+  font-family: Arial;
+  background: #0b0f14;
+  color: #e6edf3;
+  text-align: center;
+  padding: 15px;
+}
+
+h1 { color: #58a6ff; }
+
+.card {
+  background: #161b22;
+  padding: 15px;
+  margin: 12px;
+  border-radius: 14px;
+}
+
+input, select, button {
+  padding: 12px;
+  margin: 6px;
+  width: 90%;
+  border-radius: 10px;
+  border: none;
+  font-size: 16px;
+}
+
+button {
+  background: #2ea043;
+  color: white;
+  font-weight: bold;
+}
+
+.result {
+  font-size: 22px;
+  margin-top: 10px;
+  color: #58a6ff;
+}
+</style>
+</head>
+
+<body>
+
+<h1>AirTech Pro</h1>
+<p>Real HVAC Field Tools</p>
+
+<div class="card">
+<h3>Refrigerant Info</h3>
+
+<select id="ref">
+  <option value="r32">R32</option>
+  <option value="r454b">R454B</option>
+</select>
+
+<div id="refInfo"></div>
+</div>
+
+<div class="card">
+<h3>Duct CFM Calculator</h3>
+
+<select id="shape">
+  <option value="round">Round</option>
+  <option value="rect">Rectangular</option>
+</select>
+
+<div id="roundBox">
+  <input type="number" id="diameter" placeholder="Diameter (inches)">
+</div>
+
+<div id="rectBox" style="display:none;">
+  <input type="number" id="width" placeholder="Width (inches)">
+  <input type="number" id="height" placeholder="Height (inches)">
+</div>
+
+<input type="number" id="velocity" placeholder="Velocity (FPM)">
+
+<button onclick="calcCFM()">Calculate</button>
+
+<div class="result" id="cfmOut"></div>
+</div>
+
+<div class="card">
+<h3>Airflow Per Ton</h3>
+
+<input type="number" id="tons" placeholder="System Size (tons)">
+<button onclick="calcAirflow()">Calculate</button>
+
+<div class="result" id="airflowOut"></div>
+</div>
+
+<script>
+// refrigerant info
+function updateRef() {
+  let ref = document.getElementById("ref").value;
+  let info = "";
+
+  if (ref === "r32") {
+    info = "R32: A2L refrigerant, higher efficiency, higher pressure than R410A.";
+  } else {
+    info = "R454B: R410A replacement, lower GWP, A2L refrigerant.";
+  }
+
+  document.getElementById("refInfo").innerHTML = info;
+}
+document.getElementById("ref").addEventListener("change", updateRef);
+updateRef();
+
+// shape toggle
+document.getElementById("shape").addEventListener("change", function() {
+  if (this.value === "round") {
+    roundBox.style.display = "block";
+    rectBox.style.display = "none";
+  } else {
+    roundBox.style.display = "none";
+    rectBox.style.display = "block";
+  }
+});
+
+// CFM calc
+function calcCFM() {
+  let shape = document.getElementById("shape").value;
+  let velocity = document.getElementById("velocity").value;
+  let area;
+
+  if (shape === "round") {
+    let d = document.getElementById("diameter").value;
+    area = (Math.PI * Math.pow(d/12, 2)) / 4;
+  } else {
+    let w = document.getElementById("width").value;
+    let h = document.getElementById("height").value;
+    area = (w/12) * (h/12);
+  }
+
+  let cfm = area * velocity;
+  document.getElementById("cfmOut").innerHTML =
+    Math.round(cfm) + " CFM";
+}
+
+// airflow per ton
+function calcAirflow() {
+  let tons = document.getElementById("tons").value;
+  document.getElementById("airflowOut").innerHTML =
+    (tons * 400) + " CFM (avg)";
+}
+</script>
+
+<script>
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('service-worker.js');
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,36 @@
+<div class="card">
+<h3>Diagnostics Hub</h3>
+
+<select id="symptom">
+  <option value="cooling">Not Cooling Well</option>
+  <option value="freeze">Evaporator Freezing</option>
+  <option value="highhead">High Head Pressure</option>
+  <option value="lowcharge">Low Charge Symptoms</option>
+</select>
+
+<button onclick="runDiag()">Diagnose</button>
+
+<div class="result" id="diagOut"></div>
+</div>
+
+<script>
+function runDiag() {
+  let s = document.getElementById("symptom").value;
+  let out = "";
+
+  if (s === "cooling") {
+    out = "Check airflow first → dirty filter / low CFM. Then verify charge.";
+  }
+  if (s === "freeze") {
+    out = "Likely low airflow or low charge. Check superheat.";
+  }
+  if (s === "highhead") {
+    out = "Possible overcharge, dirty condenser, or airflow restriction.";
+  }
+  if (s === "lowcharge") {
+    out = "Check for leaks. Expect low suction + high superheat.";
+  }
+
+  document.getElementById("diagOut").innerHTML = out;
+}
+</script>

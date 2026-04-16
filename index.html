@@ -161,3 +161,28 @@ if ('serviceWorker' in navigator) {
 
 </body>
 </html>
+<div class="card">
+<h3>Diagnostics Pro Mode</h3>
+
+<select id="refrigerant">
+  <option value="r32">R32</option>
+  <option value="r454b">R454B</option>
+</select>
+
+<select id="symptom">
+  <option value="notcooling">Not Cooling Well</option>
+  <option value="freeze">Evaporator Freezing</option>
+  <option value="highhead">High Head Pressure</option>
+  <option value="lowcharge">Low Charge Symptoms</option>
+  <option value="shortcycle">Short Cycling</option>
+</select>
+
+<input type="number" id="suction" placeholder="Suction Pressure (optional)">
+<input type="number" id="head" placeholder="Head Pressure (optional)">
+<input type="number" id="sh" placeholder="Superheat (optional)">
+<input type="number" id="sc" placeholder="Subcool (optional)">
+
+<button onclick="diagnose()">Run Diagnosis</button>
+
+<div class="result" id="diagOut"></div>
+</div>
